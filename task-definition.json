@@ -1,0 +1,20 @@
+{
+    "family": "diskio-taskdef-fargate",
+    "executionRoleArn": "", 
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+        {
+            "name": "diskio-tools", 
+            "image": "diskio-tools:latest", 
+            "cpu": 4096, 
+            "memory": 30720, 
+            "essential": true, 
+            "command": [
+                "/usr/local/sbin/bonnie++"
+            ] 
+	}
+    ],
+    "ephemeralStorage": {
+        "sizeInGiB": 20
+    }
+}
