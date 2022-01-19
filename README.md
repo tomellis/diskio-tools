@@ -14,7 +14,13 @@ docker run -it public.ecr.aws/p0b2w3k8/diskio-tools:latest
 
 ```
 aws ecs register-task-definition --cli-input-json file://task-definition.json
-aws ecs run-task --cluster fargate --task-definition diskio-taskdef-fargate:1 --network-configuration "awsvpcConfiguration={subnets=[subnet-example1,subnet-example2,subnet-example3],securityGroups=[sg-example]}" --capacity-provider-strategy="capacityProvider=FARGATE_SPOT" --overrides="containerOverrides={name=diskio-tools,command=[\"/usr/local/sbin/bonnie++\",\"-u\",\"root\"]}
+aws ecs run-task --cluster fargate --task-definition diskio-taskdef-fargate:1 --network-configuration "awsvpcConfiguration={subnets=[subnet-example1,subnet-example2,subnet-example3],securityGroups=[sg-example],assignPublicIp=ENABLED}" --capacity-provider-strategy="capacityProvider=FARGATE_SPOT" --overrides="containerOverrides={name=diskio-tools,command=[\"/usr/local/sbin/bonnie++\",\"-u\",\"root\"]}
+```
+
+## Run an ECS task with 200GiB ephemeralStorage and use IOZone to test it
+
+```
+aws ecs run-task --cluster fargate --task-definition diskio-taskdef-fargate:1 --network-configuration "awsvpcConfiguration={subnets=[subnet-example1,subnet-example2,subnet-example3],securityGroups=[sg-example1],assignPublicIp=ENABLED}" --capacity-provider-strategy="capacityProvider=FARGATE_SPOT" --overrides="containerOverrides={name=diskio-tools,command=[\"/usr/bin/iozone\",\"-a\"]},ephemeralStorage={sizeInGiB=200}"
 ```
 
 ## ECS with CDK
