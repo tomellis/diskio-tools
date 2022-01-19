@@ -1,20 +1,31 @@
 {
     "family": "diskio-taskdef-fargate",
-    "executionRoleArn": "", 
+    "executionRoleArn": "",
     "networkMode": "awsvpc",
     "containerDefinitions": [
         {
             "name": "diskio-tools", 
-            "image": "diskio-tools:latest", 
-            "cpu": 4096, 
-            "memory": 30720, 
-            "essential": true, 
+            "image": "public.ecr.aws/p0b2w3k8/diskio-tools:latest",
+            "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+               "awslogs-group" : "/ecs/diskio-task-fargate",
+               "awslogs-region": "eu-west-1",
+               "awslogs-stream-prefix": "ecs"
+               }
+            },
+            "essential": true,
             "command": [
                 "/usr/local/sbin/bonnie++"
-            ] 
+            ]
 	}
     ],
+    "requiresCompatibilities": [
+	           "FARGATE"
+    ],
     "ephemeralStorage": {
-        "sizeInGiB": 20
-    }
+        "sizeInGiB": 21
+    },
+   "cpu": "4096",
+   "memory": "30720"
 }
