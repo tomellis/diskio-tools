@@ -14,7 +14,7 @@ docker run -it public.ecr.aws/p0b2w3k8/diskio-tools:latest
 
 ```
 aws ecs register-task-definition --cli-input-json file://task-definition.json
-aws ecs run-task --cluster fargate --task-definition diskio-taskdef-fargate:1 --network-configuration "awsvpcConfiguration={subnets=[subnet-example1,subnet-example2,subnet-example3],securityGroups=[sg-example]}" --capacity-provider-strategy="capacityProvider=FARGATE_SPOT" --overrides="containerOverrides={name=diskio-tools,command=[bonnie++ -u root]}"
+aws ecs run-task --cluster fargate --task-definition diskio-taskdef-fargate:1 --network-configuration "awsvpcConfiguration={subnets=[subnet-example1,subnet-example2,subnet-example3],securityGroups=[sg-example]}" --capacity-provider-strategy="capacityProvider=FARGATE_SPOT" --overrides="containerOverrides={name=diskio-tools,command=[\"/usr/local/sbin/bonnie++\",\"-u\",\"root\"]}
 ```
 
 ## ECS with CDK
